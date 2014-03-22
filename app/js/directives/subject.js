@@ -10,15 +10,37 @@
 
 angular.module('GSB.directives.subject', [])
 
-    .directive('subjectDir', function () {
+    .directive('subjectDir', function ($document) {
     return {
         restrict: "E",
         replace: true,
         templateUrl: 'template/subject.html',
-		link: function(scope, elem, attrs) {
-		  elem.bind('mouseover', function() {
-            elem.css('cursor', 'pointer');
+      link: function(scope, element) {
+        var startX = 0, startY = 0, x = 0, y = 0;
+
+        element.find("mover").on('mousedown', function(event) {
+          // Prevent default dragging of selected content
+          event.preventDefault();
+          startX = event.pageX;
+          startY = event.pageY;
+          $document.on('mousemove', mousemove);
+          $document.on('mouseup', mouseup);
+        });
+
+        function mousemove(event) {
+          y = event.pageY - startY;
+          x = event.pageX - startX;
+          element.css({
+            top: y + 'px',
+            left:  x + 'px'
           });
-		}
+        }
+
+        function mouseup() {
+          $document.unbind('mousemove', mousemove);
+          $document.unbind('mouseup', mouseup);
+        }
+      }
+
     }
-})
+});
