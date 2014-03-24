@@ -6,6 +6,7 @@ angular.module('GSB.controllers.workspace', [])
 .controller('WorkspaceCtrl', ['$scope', function($scope) {
   //Initial State of Subjects
   $scope.subjects = [];
+  $scope.showResult = false;
   $scope.translatedJSON = "In the near future the translated JSON will be here.";
   $scope.translatedSPARQL = "In the near future the translated SPARQL will be here.";
   $scope.mainSubjectSelected = null;
@@ -84,7 +85,9 @@ angular.module('GSB.controllers.workspace', [])
 
     //TODO: Translation from JSON to SPARQL ( Issue #6)
     $scope.translateJSONtoSPARQL = function(){
-      $scope.translateGSBLToJSON();
+      $scope.showResult = !$scope.showResult;
+      //$scope.translateGSBLToJSON();
+    };
     };
 
 }]);  

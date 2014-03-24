@@ -16,13 +16,13 @@ angular.module('GSB.directives.subject', [])
         replace: true,
         templateUrl: 'template/subject.html',
       link: function(scope, element) {
-        var startX = 0, startY = 0, x = 0, y = 0;
+        var startX = 0, startY = 0, x = 150 , y = 400 ;
 
         element.find("mover").on('mousedown', function(event) {
           // Prevent default dragging of selected content
           event.preventDefault();
-          startX = event.pageX;
-          startY = event.pageY;
+          startX = event.pageX - x;
+          startY = event.pageY - y;
           $document.on('mousemove', mousemove);
           $document.on('mouseup', mouseup);
         });

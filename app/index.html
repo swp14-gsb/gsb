@@ -8,74 +8,48 @@
 				<link rel="stylesheet" href="css/app.css"/>
 
   </head>
-  <body>
-    <div class="container" ng-controller="WorkspaceCtrl">
+  <body ng-controller="WorkspaceCtrl" >
+    <div style="z-index: 10;position: fixed;background: #808080;top:0;left:0;width:100%;">
 
       <!-- Row containing Page title -->
       <div class="row">
+        <div class="col-sm-12">
         <h1>Graphical SPARQL Builder</h1>
+        </div>
       </div>
       <!-- Row containing top controls -->
       <div class="row">
 								<div id="top-controls" class="col-sm-12">
-										<a href="#" class="btn btn-warning" ng-click="translateGSBLToJSON()">Build Query</a>
-										<!--<a href="#" class="btn btn-info" ng-click="translateJSONtoSPARQL()">Save as JSON</a>-->
+										<a href="#" class="btn btn-warning" ng-show="!showResult" ng-click="translateJSONtoSPARQL()">Build Query</a>
+										<a href="#" class="btn btn-success" ng-show="showResult" ng-click="showResult = !showResult">Back to Workspace</a>
+										<!--<a href="#" class="btn btn-info" ng-click="translateGSBLToJSON()">Save as JSON</a>-->
 										<a href="#" class="btn btn-danger">Reset Query</a>
+                  <div class="addSubjectClass pull-right" ng-controller="AddSubjectDropDownCtrl" ng-show="!showResult">
+                    <button class="btn btn-success" ng-click="dropDownAddSubject()">
+                      Add
+                    </button>
+                    <select ng-model="selectedSubjectClass" ng-options="asc.alias for asc in availableSubjectClasses">
+                      <option value="">-choose subject-</option>
+                    </select>
+                  </div>
 								</div>
       </div>
 
-      <!-- WORKSPACE, this is where most of the magic happens -->
-      <div id="top" class="row">
+      </div>
 
-        <!-- See @js/controllers/workspace.js -->
-        <div id="workspace" class="col-sm-12">
-										
-          <!-- Button/Modal for adding Subjects, See @js/controllers/workspace.js -->
-										<div class="addSubjectClass pull-right" ng-controller="ModalCtrl">
-												modal version<br>
-												<button class="btn btn-success" ng-click="open()">Choose subject!</button>
-										</div>
 
-										<!-- Drop Down in a Button for adding Subjects, See @js/controllers/workspace.js -->
-										<!--	the nesting of a dropdown in a button seems to cause problems in some browsers-->
-										<div class="addSubjectClass pull-right" ng-controller="AddSubjectDropDownCtrl">
-												dropdown in button version<br>
-												<button class="btn btn-success" ng-click="dropDownAddSubject()">
-														Add
-														
-														<select ng-model="selectedSubjectClass" ng-options="asc.alias for asc in availableSubjectClasses">
-																<option value="">-choose subject-</option>
-														</select>
-												</button>
-										</div>
-										
-										<!-- Button/Drop Down for adding Subjects, See @js/controllers/workspace.js -->
-										<!--	hope this on works fine-->
-										<div class="addSubjectClass pull-right" ng-controller="AddSubjectDropDownCtrl">
-												dropdown next to button version<br>
-												<button class="btn btn-success" ng-click="dropDownAddSubject()">
-														Add
-												</button>
-												<select ng-model="selectedSubjectClass" ng-options="asc.alias for asc in availableSubjectClasses">
-														<option value="">-choose subject-</option>
-												</select>
-										</div>
 
-										<!-- Start Point, with drop down for choosing the main class (= linked to startpoint) -->
-										<div class="startPointCSS">
-										  LIST ALL
-										  <select ng-model="mainSubjectSelected" ng-options="s.alias for s in subjects">
-										    <option style="display:none" value="">Pick main subject</option>
-										  </select>
-										</div>
-
-										<!-- Inserts all existing subjects in workspace, See @js/directives/workspace.js -->
-										<subject-dir ng-repeat="subjectInst in subjects"></subject-dir>
-								</div>
-						</div>
+        <div class="startPointCSS roundDiv" style="z-index: 0; position: fixed; top: 165px;left:25px;" ng-show="!showResult">
+          LIST ALL
+          <select ng-model="mainSubjectSelected" ng-options="s.alias for s in subjects">
+            <option style="display:none" value="">Pick main subject</option>
+          </select>
+        </div>
+				<!-- Inserts all existing subjects in workspace, See @js/directives/workspace.js -->
+        <subject-dir ng-repeat="subjectInst in subjects" ng-show="!showResult"></subject-dir>
 
 						<!-- Result area, at the moment not populated -->
-						<div class="row">
+						<div class="container" ng-show="showResult" style="top:250px;position: relative">
 								<h3 class="col-sm-12">SPARQL Query</h3>
 								<div id="middle-controls" class="col-sm-12">Controls for SPARQL Result</div>
 								<div class="col-sm-6">JSON:</div>
@@ -83,7 +57,7 @@
 								<pre id="json-query" class="col-sm-6">{{translatedJSON}}</pre>
 								<pre id="sparql-query" class="col-sm-6">{{translatedSPARQL}}</pre>
 						</div>
-				</div>
+
 
     <!-- In production use:
    <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>

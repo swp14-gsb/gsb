@@ -7,9 +7,9 @@
 
 /* Set height and color of workspace and result area */
 
-#workspace {
+#workspace, #top, body {
   min-height: 400px;
-  background-color: #eeeeee;
+  position: relative;
 }
 
 #sparql-query, #json-query {
@@ -20,35 +20,40 @@
 
 /* Set layout of startpoints, subjects etc. */
 
-#workspace > div {
+.roundDiv {
   border-radius: 5px;
   border:1px solid black;
   padding: 10px;
   margin: 10px 0;
   width: 250px;
-  position: relative;
+    z-index: 5;
+
+    position: absolute;
 }
 
 #workspace > div mover {
   cursor: pointer;
 }
 
-#workspace > div.addSubjectClass{
+div.addSubjectClass{
   border-radius: 0;
   border:0 solid black;
     width:auto;
 }
 
-#workspace > div.startPointCSS {
+div.startPointCSS {
   background: red;
 }
 
-#workspace > div.startPointCSS > select {
+div.startPointCSS > select {
   float : right;
 }
 
-#workspace > div.subjectCSS {
+div.subjectCSS {
   background-color: #ffff00;
+    position: absolute;
+    top:400px;
+    left:150px;
 }
 
 div.subjectCSS > h1,h2,h3,h4,h5,h6 {
