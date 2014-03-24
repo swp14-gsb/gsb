@@ -18,6 +18,25 @@ angular.module('GSB.directives.subject', [])
       link: function(scope, element) {
         var startX = 0, startY = 0, x = 150 , y = 400 ;
 
+        scope.$watch('offsetX', function(newValue) {
+          moveX(newValue);
+        });
+
+        scope.$watch('offsetY', function(newValue) {
+          moveY(newValue);
+        });
+
+        function moveX(offset){
+          x = x + offset;
+          element.css({left: x + 'px'});
+        }
+
+        function moveY(offset){
+          y = y + offset;
+          element.css({top: y + 'px'});
+        }
+
+
         element.find("mover").on('mousedown', function(event) {
           // Prevent default dragging of selected content
           event.preventDefault();
