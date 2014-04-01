@@ -98,6 +98,10 @@ div.subjectCSS div.subjectBodyCSS select{
   color:darkgoldenrod;
 }
 
+div.subjectCSS span.inputErrorCSS {
+  background-color: #ff0000;
+}
+
 /* Set layout of properties etc. */
 
 div.subjectCSS div.propertyCSS {
