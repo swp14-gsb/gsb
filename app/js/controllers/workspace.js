@@ -141,5 +141,8 @@ angular.module('GSB.controllers.workspace', ['GSB.config'])
         var win=window.open(globalConfig.queryURL + encodeURIComponent($scope.translatedSPARQL), '_blank');
         win.focus();
     }
+ 
+    // Alias input validation related
+    $scope.aliasPattern = /^\s*\w*\s*$/;
 
   }]);
